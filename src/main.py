@@ -16,14 +16,14 @@ log_critical = LoggerX().logger.critical
 
 @LoggerX()
 def write_sha(sha_str, repo_name):
-    with open(f"[{repo_name}].txt", "w") as f:
+    with open(f"{repo_name}.txt", "w") as f:
         f.write(sha_str)
 
 
 @LoggerX()
 def read_sha(repo_name):
     try:
-        with open(f"[{repo_name}].txt", "r") as f:
+        with open(f"{repo_name}.txt", "r") as f:
             sha_commit = f.read()
     except FileNotFoundError:
         with open("commit_sha.txt", "w") as f:
@@ -37,7 +37,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
     token = os.getenv("GIT_API_SECRET")
     g = None
     try:
-        log_warn(f"[{repo_name}] Running script")
+        log_warn(f"{repo_name}] Running script")
         last_sha_str = read_sha(repo_name)
         g = Github(token)
         print(repo_str)
@@ -46,16 +46,16 @@ def check_git(repo_str, repo_name, path, branch="master"):
         if last_sha_str != branch.commit.sha:
             # NEW COMMIT!
             print(f"new commit! {branch.commit.sha}")
-            log_info(f"[{repo_name}] New commit detected.")
+            log_info(f"{repo_name}] New commit detected.")
             write_sha(branch.commit.sha, repo_name)
             subprocess.run(f"./src/git_pull.sh {path}", shell=True, check=True)
         else:
-            log_info(f"[{repo_name}] No changes detected.")
+            log_info(f"{repo_name}] No changes detected.")
 
     except Exception as ex:
         log_err(repo_str, ex)
     finally:
-        log_warn(f"[{repo_name}] End Script")
+        log_warn(f"{repo_name}] End Script")
 
 
 if __name__ == "__main__":
