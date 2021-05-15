@@ -1,7 +1,6 @@
 #!/bin/bash
-
+path="$1"
 echo "move to repo DIR"
-cd $1
 echo "git pull"
-git pull
+( cd $path && git pull)
 echo "DONE"

@@ -48,8 +48,13 @@ def check_git(repo_str, repo_name, path, branch="master"):
             print(f"new commit! {branch.commit.sha}")
             log_info(f"{repo_name}] New commit detected.")
             write_sha(branch.commit.sha, repo_name)
-            result = subprocess.run(f"./git_pull.sh {path}".split(), capture_output=True, check=True)
-            log_info(f"{repo_name}] {result}")
+            try:
+                log_info(f"{repo_name} running bash")
+                proc = subprocess.run(["./src/git_pull.sh", path], capture_output=True)
+                log_info(f"{repo_name} {proc}")
+            except TimeoutExpired as ex:
+                proc.kill()
+                log_err(f"{repo_name} {ex}")
         else:
             log_info(f"[{repo_name}] No changes detected.")
 
@@ -61,10 +66,10 @@ def check_git(repo_str, repo_name, path, branch="master"):
 
 if __name__ == "__main__":
     schedule.every(1).minutes.do(
-        check_git, "jowtro/fr-cnbase-jxtech", "fr-cnbase-jxtech", "/home/pi/work/fr-cnbase-jxtech"
+        check_git, "jowtro/fr-cnbase-jxtech", "fr-cnbase-jxtech", r"/home/pi/work/fr-cnbase-jxtech"
     )
 
-    schedule.every(1).minutes.do(check_git, "jowtro/bnance_jxtech", "bnance_jxtech", "/home/pi/work/bnance_jxtech")
+    schedule.every(1).minutes.do(check_git, "jowtro/bnance_jxtech", "bnance_jxtech", r"/home/pi/work/bnance_jxtech")
     
     # Run cron
     while True:
