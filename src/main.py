@@ -34,15 +34,24 @@ def read_sha(repo_name):
 
 
 def check_git(repo_str, repo_name, path, branch="master"):
-    token = os.getenv("GIT_API_SECRET")
-    g = None
-    try:
-        log_warn(f"[{repo_name}] Running script")
-        last_sha_str = read_sha(repo_name)
-        g = Github(token)
-        print(repo_str)
-        branch = g.get_repo(repo_str).get_branch(branch)
+    """Compare latest commit's sha with a stored one if is different
+        does a git pull.
 
+    Args:
+        repo_str (str): repository user/repo path
+        repo_name (str): repository name
+        path (str): file path
+        branch (str, optional): branch. Defaults to "master".
+    """
+    token = os.getenv("GIT_API_SECRET")
+    git = None
+    try:
+        log_warn(f"[{repo_name}] ---------------- Running script")
+        last_sha_str = read_sha(repo_name)
+        git = Github(token)
+        print(repo_str)
+        branch = git.get_repo(repo_str).get_branch(branch)
+        # compare commit sha string
         if last_sha_str != branch.commit.sha:
             # NEW COMMIT!
             print(f"new commit! {branch.commit.sha}")
@@ -62,7 +71,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
     except Exception as ex:
         log_err(repo_str, ex)
     finally:
-        log_warn(f"[{repo_name}] End Script")
+        log_warn(f"[{repo_name}] ---------------- End Script")
 
 
 if __name__ == "__main__":
