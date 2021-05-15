@@ -59,12 +59,13 @@ def check_git(repo_str, repo_name, path, branch="master"):
 
 
 if __name__ == "__main__":
+    
     schedule.every(1).minutes.do(
-        check_git, "jowtro/fr-cnbase-jxtech", "fr-cnbase-jxtech", "/home/jonnas/4fun/fr-cnbase-jxtech"
+        check_git, "jowtro/fr-cnbase-jxtech", "fr-cnbase-jxtech", "/home/pi/work/fr-cnbase-jxtech"
     )
 
-    schedule.every(1).minutes.do(check_git, "jowtro/bnance_jxtech", "bnance_jxtech", "/home/jonnas/4fun/bnance_jxtech")
-
+    schedule.every(1).minutes.do(check_git, "jowtro/bnance_jxtech", "bnance_jxtech", "/home/pi/work/bnance_jxtech")
+    
     # Run cron
     while True:
         schedule.run_pending()
