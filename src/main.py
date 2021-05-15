@@ -48,7 +48,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
             print(f"new commit! {branch.commit.sha}")
             log_info(f"{repo_name}] New commit detected.")
             write_sha(branch.commit.sha, repo_name)
-            result = subprocess.run(f"./src/git_pull.sh {path}", capture_output=True, check=True)
+            result = subprocess.run(f"./git_pull.sh {path}".split(), capture_output=True, check=True)
             log_info(f"{repo_name}] {result}")
         else:
             log_info(f"[{repo_name}] No changes detected.")
@@ -60,7 +60,6 @@ def check_git(repo_str, repo_name, path, branch="master"):
 
 
 if __name__ == "__main__":
-    
     schedule.every(1).minutes.do(
         check_git, "jowtro/fr-cnbase-jxtech", "fr-cnbase-jxtech", "/home/pi/work/fr-cnbase-jxtech"
     )
