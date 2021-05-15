@@ -6,7 +6,9 @@ import schedule
 import os
 import time
 
+# reads .env file from project root ./
 load_dotenv()
+
 LoggerX().create_rotating_log("./git_hook.log", "jx-githook")
 log_info = LoggerX().logger.info
 log_warn = LoggerX().logger.warning
@@ -50,8 +52,9 @@ def check_git(repo_str, repo_name, path, branch="master"):
         last_sha_str = read_sha(repo_name)
         git = Github(token)
         print(repo_str)
+        # get info from branch
         branch = git.get_repo(repo_str).get_branch(branch)
-        # compare commit sha string
+        # compare commit sha strings (gets current sha > branch.commit.sha)
         if last_sha_str != branch.commit.sha:
             # NEW COMMIT!
             print(f"new commit! {branch.commit.sha}")
@@ -59,7 +62,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
 
             write_sha(branch.commit.sha, repo_name)
             log_info(f"{repo_name} running bash")
-
+            # run a script that does git pull on specific dir
             proc = subprocess.run(
                 ["./src/git_pull.sh", path], capture_output=True
             )
