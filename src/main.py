@@ -45,11 +45,11 @@ def check_git(repo_str, repo_name, path, branch="master"):
         path (str): file path
         branch (str, optional): branch. Defaults to "master".
     """
-    token = os.getenv("GIT_API_SECRET")
+    token = os.getenv("GIT_API_SECRET")  # Token necessary token for github
     git = None
     try:
         log_warn(f"[{repo_name}] ---------------- Running script")
-        last_sha_str = read_sha(repo_name)
+        last_sha_str = read_sha(repo_name)  # get last commit sha
         git = Github(token)
         print(repo_str)
         # get info from branch
