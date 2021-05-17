@@ -64,7 +64,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
             log_info(f"{repo_name} running bash")
             # run a script that does git pull on specific dir
             proc = subprocess.run(
-                ["./src/git_pull.sh", path], capture_output=True
+                ["./git_pull.sh", path], capture_output=True
             )
 
             log_info(f"{repo_name} {proc}")
@@ -82,14 +82,14 @@ if __name__ == "__main__":
         check_git,
         "jowtro/fr-cnbase-jxtech",
         "fr-cnbase-jxtech",
-        "/home/jonnas/4fun/fr-cnbase-jxtech",
+        "/home/pi/work/fr-cnbase-jxtech",
     )
 
     schedule.every(30).seconds.do(
         check_git,
         "jowtro/bnance_jxtech",
         "bnance_jxtech",
-        "/home/jonnas/4fun/bnance_jxtech",
+        "/home/pi/work/bnance_jxtech",
     )
 
     # Run cron
