@@ -5,9 +5,7 @@ from util.log import LoggerX
 import schedule
 import os
 import time
-from pathlib import Path
 
-script_path = str(Path(os.getcwd()).parent.absolute())
 # reads .env file from project root ./
 load_dotenv()
 
@@ -66,7 +64,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
             log_info(f"{repo_name} running bash")
             # run a script that does git pull on specific dir
             proc = subprocess.run(
-                [f"{script_path}/git_pull.sh", path], capture_output=True
+                ["./git_pull.sh", path], capture_output=True
             )
 
             log_info(f"{repo_name} {proc}")
