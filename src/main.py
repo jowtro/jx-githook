@@ -63,10 +63,11 @@ def check_git(repo_str, repo_name, path, branch="master"):
             log_info(f"{repo_name}] New commit detected.")
 
             write_sha(branch.commit.sha, repo_name)
-            log_info(f"{repo_name} running bash")
+            log_info(f".{repo_name} running bash")
+            print(f".{script_path}/git_pull.sh")
             # run a script that does git pull on specific dir
             proc = subprocess.run(
-                [f"./{script_path}/git_pull.sh", path], capture_output=True
+                [f".{script_path}/git_pull.sh", path], capture_output=True
             )
 
             log_info(f"{repo_name} {proc}")
