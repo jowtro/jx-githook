@@ -48,7 +48,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
     token = os.getenv("GIT_API_SECRET")  # Token necessary token for github
     git = None
     try:
-        log_warn(f"[{repo_name}] ---------------- Running script")
+        log_info(f"[{repo_name}] ---------------- Running script")
         last_sha_str = read_sha(repo_name)  # get last commit sha
         git = Github(token)
         print(repo_str)
@@ -72,7 +72,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
     except Exception as ex:
         log_err(repo_str, ex)
     finally:
-        log_warn(f"[{repo_name}] ---------------- End Script")
+        log_info(f"[{repo_name}] ---------------- End Script")
 
 
 if __name__ == "__main__":
