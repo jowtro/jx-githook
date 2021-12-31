@@ -63,9 +63,7 @@ def check_git(repo_str, repo_name, path, branch="master"):
             write_sha(branch.commit.sha, repo_name)
             log_info(f"{repo_name} running bash")
             # run a script that does git pull on specific dir
-            proc = subprocess.run(
-                ["./git_pull.sh", path], capture_output=True
-            )
+            proc = subprocess.run(["./git_pull.sh", path], capture_output=True)
 
             log_info(f"{repo_name} {proc}")
         else:
