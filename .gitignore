@@ -134,3 +134,4 @@ dmypy.json
 migrations
 lab
 gunicorn.conf.py
+.vscode
